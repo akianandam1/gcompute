@@ -126,7 +126,7 @@ def loss_values(identity, vec, m_1, m_2, m_3, lr, time_step, num_epochs, max_per
         print(f"{identity},{i},{loss.item()}\n")
         losses.append(loss.item())
       
-        with open("lossvalues\\case2roadloss2.txt", "a") as file:
+        with open("c1l1.txt", "a") as file:
             file.write(f"{identity},{i},{loss.item()}\n")
 
         
