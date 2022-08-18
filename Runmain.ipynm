@@ -1,0 +1,6 @@
+import random
+from case1road import data
+from main import batch_losses
+
+start = random.randint(0, len(data) - 1)
+batch_losses(data, start, start+1)
