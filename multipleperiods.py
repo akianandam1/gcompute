@@ -43,7 +43,7 @@ def optimize(vec, m_1, m_2, m_3, time_step, max_period, num_periods, num_epochs,
         if i == 0:
             input_vec = torch.cat((vec, torch.tensor([m_1,m_2,m_3])))
             data_set = torchstate(input_vec, time_step, max_period, method)
-            print(f"Max Period: {max_period}")
+            print("Max Period: "+str(max_period))
             first_index = nearest_position_state(1, data_set[0], data_set, 300, len(data_set), time_step)
             first_particle_state = data_set[first_index]
             second_index = nearest_position_state(2, data_set[0], data_set, 300, len(data_set), time_step)
@@ -64,16 +64,16 @@ def optimize(vec, m_1, m_2, m_3, time_step, max_period, num_periods, num_epochs,
             # Updates input vector
             optimizer.step()
             print(input_vec)
-            print(f"Epoch: {i}")
+            print("Epoch: "+i)
             optimizer.zero_grad()
             period_index = int((first_index + second_index + third_index) / 3)
             i += 1              
             
         elif i == 1:
-            s1 = time.time()
+         
             input_vec = torch.cat((vec, torch.tensor([m_1,m_2,m_3])))
             data_set = torchstate(input_vec, time_step, max_period, method)
-            print(f"Max Period: {max_period}")
+            print("Max Period: "+str(max_period))
             first_index = nearest_position_state(1, data_set[0], data_set, 300, period_index+100, time_step)
             first_particle_state = data_set[first_index]
             second_index = nearest_position_state(2, data_set[0], data_set, 300, period_index+100, time_step)
@@ -89,17 +89,16 @@ def optimize(vec, m_1, m_2, m_3, time_step, max_period, num_periods, num_epochs,
                 file.write(f"{input_vec},{i},{loss}\\n")
         
             print(loss)
-            s3 = time.time()
+          
             loss.backward()
-            s4 = time.time()
-            print(f"Loss computation seconds: {s4-s3}")
+            
             # Updates input vector
             optimizer.step()
             print(input_vec)
-            print(f"Epoch: {i}")
+            print("Epoch: "+i)
             optimizer.zero_grad()
             s2 = time.time()
-            print(f"Total computation: {s2-s1}")
+       
             i += 1
 
                         
@@ -108,7 +107,7 @@ def optimize(vec, m_1, m_2, m_3, time_step, max_period, num_periods, num_epochs,
             while k < num_periods:
                 input_vec = torch.cat((vec, torch.tensor([m_1,m_2,m_3])))
                 data_set = torchstate(input_vec, time_step, max_period, method)
-                print(f"Max Period: {max_period}")
+                print("Max Period: "+str(max_period))
                 first_index = nearest_position_state(1, data_set[0], data_set, k*period_index+300, (k+1)*(period_index+100), time_step)
                 first_particle_state = data_set[first_index]
                 second_index = nearest_position_state(2, data_set[0], data_set, k*period_index+300, (k+1)*(period_index+100), time_step)
@@ -127,7 +126,7 @@ def optimize(vec, m_1, m_2, m_3, time_step, max_period, num_periods, num_epochs,
                 # Updates input vector
                 optimizer.step()
                 print(input_vec)
-                print(f"Epoch: {i}")
+                print("Epoch: "+i)
                 optimizer.zero_grad()
                 k += 1
             i += num_periods
