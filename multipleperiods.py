@@ -26,7 +26,7 @@ def nearest_position_state(particle, state, data_set, min, max, time_step):
 
         i += 1
 
-    print("Time: "+index*time_step")
+    print("Time: "+index*time_step)
     return index
 
 
