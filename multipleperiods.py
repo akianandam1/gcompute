@@ -135,9 +135,9 @@ def optimize(vec, m_1, m_2, m_3, time_step, max_period, num_periods, num_epochs,
 m_1 = 1
 m_2 = 1
 m_3 = 0.75
-vec = torch.tensor([-0.9818,  0.0308,  0.0000,  0.9663,  0.0285,  0.0000, -0.0133,  0.0096,
-         0.0000,  0.4220,  0.2532,  0.0000,  0.4213,  0.2706,  0.0000, -1.1225,
-        -0.6966,  0.0000], requires_grad = True)
+vec = torch.tensor([-0.9820,  0.0309,  0.0000,  0.9664,  0.0286,  0.0000, -0.0132,  0.0096,
+         0.0000,  0.4221,  0.2533,  0.0000,  0.4213,  0.2707,  0.0000, -1.1225,
+        -0.6964,  0.0000], requires_grad = True)
 
 optimizer = torch.optim.NAdam([vec], lr=.0001)
 optimize(vec, m_1, m_2, m_3, .0008, 25, 4, 210, "dopri5", optimizer)
