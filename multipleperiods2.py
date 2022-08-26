@@ -39,7 +39,7 @@ def optimize(vec, m_1, m_2, m_3, time_step, max_period, num_periods, num_epochs,
     period_index = int(5.6664*time_step)
     while i < num_epochs:
               
-        k = num_periods
+        k = num_periods-1
         input_vec = torch.cat((vec, torch.tensor([m_1,m_2,m_3])))
         data_set = torchstate(input_vec, time_step, max_period, method)
         print(f"Max Period: {max_period}")
