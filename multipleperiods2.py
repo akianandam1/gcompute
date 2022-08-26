@@ -54,7 +54,7 @@ def optimize(vec, m_1, m_2, m_3, time_step, max_period, num_periods, num_epochs,
                                                                                                  second_particle_state) + nearest_position(
                 3, data_set[0], third_particle_state)
             
-            with open("optimizelog.txt", "a") as file:
+            with open("optimizelog2.txt", "a") as file:
                 file.write(f"{input_vec},{i},{loss}\\n")
         
             print(loss)
@@ -85,7 +85,7 @@ def optimize(vec, m_1, m_2, m_3, time_step, max_period, num_periods, num_epochs,
                 3, data_set[0], third_particle_state)
                 
             period_index = int((first_index + second_index + third_index) / 3)
-            with open("optimizelog.txt", "a") as file:
+            with open("optimizelog2.txt", "a") as file:
                 file.write(f"{input_vec},{i},{loss}\\n")
         
             print(loss)
@@ -116,7 +116,7 @@ def optimize(vec, m_1, m_2, m_3, time_step, max_period, num_periods, num_epochs,
                 third_particle_state = data_set[third_index]
                 loss = nearest_position(1, data_set[0], first_particle_state) + nearest_position(2, data_set[0], second_particle_state) + nearest_position(3, data_set[0], third_particle_state)
                 
-                with open("optimizelog.txt", "a") as file:
+                with open("optimizelog2.txt", "a") as file:
                     file.write(f"{input_vec},{i},{loss}\\n")
         
                 print(loss)
