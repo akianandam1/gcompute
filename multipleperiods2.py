@@ -36,7 +36,7 @@ def optimize(vec, m_1, m_2, m_3, time_step, max_period, num_periods, num_epochs,
     
     optimizer.zero_grad()
     i = 0
-    period_index = int(5.6664*time_step)
+    period_index = int(5.6664/time_step)
     while i < num_epochs:
               
         k = num_periods-1
