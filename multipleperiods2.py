@@ -72,10 +72,10 @@ def optimize(vec, m_1, m_2, m_3, time_step, max_period, num_periods, num_epochs,
 m_1 = 1
 m_2 = 1
 m_3 = 0.75
-vec = torch.tensor([-0.9819,  0.0308,  0.0000,  0.9665,  0.0287,  0.0000, -0.0131,  0.0096,
-         0.0000,  0.4220,  0.2533,  0.0000,  0.4213,  0.2707,  0.0000, -1.1225,
-        -0.6964,  0.0000], requires_grad = True)
+vec = torch.tensor([-0.9819,  0.0308,  0.0000,  0.9667,  0.0287,  0.0000, -0.0131,  0.0095,
+         0.0000,  0.4219,  0.2533,  0.0000,  0.4212,  0.2707,  0.0000, -1.1225,
+        -0.6964,  0.0000,  1.0000,  1.0000,  0.7500], requires_grad = True)
 
-optimizer = torch.optim.NAdam([vec], lr=.0001)
+optimizer = torch.optim.SGD([vec], lr=.000005)
 optimize(vec, m_1, m_2, m_3, .0008, 25, 4, 520, "dopri5", optimizer)
     
