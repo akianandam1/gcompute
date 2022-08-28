@@ -77,5 +77,5 @@ vec = torch.tensor([-0.981900,  0.030800,  0.000000,  0.966700,  0.028700,  0.00
         -0.696400,  0.0000], dtype=torch.float64, requires_grad = True)
 
 optimizer = torch.optim.SGD([vec], lr=.00001)
-optimize(vec, m_1, m_2, m_3, .0003, 30, 5, 520, "dopri5", optimizer)
+optimize(vec, m_1, m_2, m_3, .0003, 30, 5, 520, "rk4", optimizer)
     
