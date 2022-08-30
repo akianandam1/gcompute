@@ -78,6 +78,6 @@ vec = torch.tensor([-0.981892815973,  0.030792803350,  0.000000000000,  0.966692
          0.421304019421,  0.270693287140,  0.000000000000, -1.122492587773,
         -0.696392628046,  0.000000000000], dtype=torch.float64, requires_grad = True)
 
-optimizer = torch.optim.NAdam([vec], lr=.00001)
+optimizer = torch.optim.NAdam([vec], lr=.000001)
 optimize(vec, m_1, m_2, m_3, .0003, 41, 7, 1000, "dopri5", optimizer)
     
