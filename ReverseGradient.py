@@ -135,10 +135,10 @@ def reverse_grad(a, b, c, lr, time_step, num_epochs, max_period):
 
 
 # Takes in v_1 and v_2
-def reverse_grad2(v_1, v_2, lr, time_step, num_epochs, max_period):
-    v_1 = torch.tensor([b], requires_grad = True)
+def reverse_grad2(a, b, lr, time_step, num_epochs, max_period):
+    v_1 = torch.tensor([a], requires_grad = True)
     v_1 = perturb2(v_1, .001)
-    v_2 = torch.tensor([c], requires_grad = True)
+    v_2 = torch.tensor([b], requires_grad = True)
     v_2 = perturb2(v_2, .001)
 
 
