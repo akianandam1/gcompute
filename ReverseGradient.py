@@ -51,7 +51,7 @@ def nearest_position(particle, state1, state2):
 def nearest_position_state(particle, state, data_set, min, max, time_step):
     i = min
     max_val = torch.tensor([100000000])
-    index = -1
+    index = 300
     while i < max:
         if nearest_position(particle, state, data_set[i]).item() < max_val.item():
             index = i
