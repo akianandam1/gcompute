@@ -1,5 +1,6 @@
 import torch
 from RevisedNumericalSolver import torchstate
+#from equalmass import values
 
 # Perturbs input vector using normal distribution
 # takes in float standard deviation
@@ -66,11 +67,11 @@ def nearest_position_state(particle, state, data_set, min, max, time_step):
 # Input vec is in form x_1, v_1, v_2; m_1=m_2=m_3=1
 def reverse_grad(a, b, c, lr, time_step, num_epochs, max_period):
     x_1 = torch.tensor([a], requires_grad = True)
-   # x_1 = perturb2(x_1, .001)
+    x_1 = perturb2(x_1, .001)
     v_1 = torch.tensor([b], requires_grad = True)
-   # v_1 = perturb2(v_1, .001)
+    v_1 = perturb2(v_1, .001)
     v_2 = torch.tensor([c], requires_grad = True)
-   # v_2 = perturb2(v_2, .001)
+    v_2 = perturb2(v_2, .001)
 
 
     print("Begun")
@@ -132,11 +133,81 @@ def reverse_grad(a, b, c, lr, time_step, num_epochs, max_period):
         i += 1
 
 
+
+# Takes in v_1 and v_2
+def reverse_grad2(v_1, v_2, lr, time_step, num_epochs, max_period):
+    v_1 = torch.tensor([b], requires_grad = True)
+    v_1 = perturb2(v_1, .001)
+    v_2 = torch.tensor([c], requires_grad = True)
+    v_2 = perturb2(v_2, .001)
+
+
+    print("Begun")
+    i = 0
+    while i < num_epochs:
+        input_vec = torch.stack((
+            torch.tensor([-1]),
+            torch.tensor([0]),
+            torch.tensor([0]),
+            torch.tensor([1]),
+            torch.tensor([0]),
+            torch.tensor([0]),
+            torch.tensor([0]),
+            torch.tensor([0]),
+            torch.tensor([0]),
+            v_1,
+            v_2,
+            torch.tensor([0]),
+            v_1,
+            v_2,
+            torch.tensor([0]),
+            -2*v_1,
+            -2*v_2,
+            torch.tensor([0]),
+            torch.tensor([1]),
+            torch.tensor([1]),
+            torch.tensor([1]),
+
+        )).flatten()
+        #print(input_vec)
+        #input_vec = torch.tensor([vec[0], 0, 0, 1, 0, 0, 0, 0, 0, 0, vec[1], 0, 0, vec[2], 0, 0, -vec[1]-vec[2], 0, 1, 1, 1], requires_grad = True)
+        #vec.retain_grad()
+        data_set = torchstate(input_vec, time_step, max_period, "rk4")
+        #vec.retain_grad()
+        first_index = nearest_position_state(1, data_set[0], data_set, 300, len(data_set), time_step)
+        first_particle_state = data_set[first_index]
+        second_index = nearest_position_state(2, data_set[0], data_set, 300, len(data_set), time_step)
+        second_particle_state = data_set[second_index]
+        third_index = nearest_position_state(3, data_set[0], data_set, 300, len(data_set), time_step)
+        third_particle_state = data_set[third_index]
+        loss = nearest_position(1, data_set[0], first_particle_state) + nearest_position(2, data_set[0], second_particle_state) + nearest_position(3, data_set[0], third_particle_state)
+
+        #vec.retain_grad()
+        loss.backward()
+        print(v_1.grad, v_2.grad)
+        with torch.no_grad():
+         
+            v_1 += v_1.grad * lr
+            v_2 += v_2.grad * lr
+     
+        v_1.grad.zero_()
+        v_2.grad.zero_()
+
+        with open("ReverseGradientPoints.txt", "a") as file:
+            file.write(f"{v_1.item()},{v_2.item()}\n")
+        print(f"{v_1.item()},{v_2.item()}\n")
+        print(input_vec)
+        print(f"Epoch: {i}")
+        i += 1
+
+
 #1.0000 1.0000 1.0000 -1.325626981682458e+00 -8.933877752879044e-01 -2.885702941263346e-01 9.199307755830397e+00 3.831608876556280e-01
 # -0.37200864090742 	1.21800411067968 	0.45310805383360 	7.53971451331775
 
 #v = torch.tensor([-1.325626981682458e+00, -8.933877752879044e-01, -2.885702941263346e-01], requires_grad = True)
 #v = perturb2(v, .01)
 
-reverse_grad(-1.3176461458206177,-0.8931861519813538,-0.31467458605766296, .001, .01, 500, int(9.199307755830397e+00)+2)
+
+if __name__ == "__main__":
+    reverse_grad(-1.3176461458206177,-0.8931861519813538,-0.31467458605766296, .001, .01, 500, int(9.199307755830397e+00)+2)
 #reverse_grad(-1.325626981682458e+00, -8.933877752879044e-01, -2.885702941263346e-01, .001, .01, 500, int(9.199307755830397e+00)+2)
